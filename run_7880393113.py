@@ -25,7 +25,7 @@ mesgdcrt = MessageDecorator("icon")
 
 CC = "91"
 TARGET = "7880393113"
-DELAY = 5
+DELAY = 1
 THREADS = 3
 SMS_LIMIT = 500
 CALL_LIMIT = 15
@@ -54,7 +54,7 @@ def bomb(mode, count):
                 print(f"  {mode.upper()} | Sent: {success+failed} | OK: {success} | Fail: {failed}")
     return success, failed
 
-mesgdcrt.SuccessMessage("T3RMUXK1NG Auto Bomber for +91 7880393113")
+mesgdcrt.SuccessMessage(f"T3RMUXK1NG Auto Bomber for +{CC} {TARGET}")
 mesgdcrt.WarningMessage("SMS limit: 500 | Call limit: 15 | Delay: 5s | Loop: ON")
 time.sleep(2)
 
