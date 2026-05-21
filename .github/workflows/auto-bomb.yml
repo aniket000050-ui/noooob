@@ -1,0 +1,35 @@
+name: Auto Bomb
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Target phone number'
+        required: true
+        default: ''
+      mode:
+        description: 'Attack mode (sms/call/mail)'
+        default: 'sms'
+
+jobs:
+  bomb:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run Auto Bomber
+        run: |
+          TARGET="${{ secrets.TARGET_NUM || github.event.inputs.target }}"
+          MODE="${{ github.event.inputs.mode || 'sms' }}"
+          if [ -z "$TARGET" ]; then
+            echo "No target number set. Use TARGET_NUM secret or workflow_dispatch."
+            exit 0
+          fi
+          python auto_bomber.py -t "$TARGET" -m "$MODE" -n 100 -d 2 -th 5
