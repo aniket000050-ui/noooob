@@ -81,9 +81,9 @@ def stop():
 def status():
     return jsonify({"running": bomb_running, "target": f"+{CC} {TARGET}"})
 
+# Auto-start on boot (works with gunicorn on Render)
+threading.Thread(target=run_bomber, daemon=True).start()
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    t = threading.Thread(target=run_bomber, daemon=True)
-    t.start()
-    bomb_thread = t
     app.run(host="0.0.0.0", port=port, debug=False, use_reloader=False)
