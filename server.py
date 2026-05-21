@@ -32,14 +32,14 @@ def run_bomber():
             if not stop_flag:
                 try:
                     auto_bomb(CC, TARGET, "sms", SMS_LIMIT, DELAY, THREADS, loop=False)
-                except Exception as e:
+                except BaseException as e:
                     mesgdcrt.FailureMessage(f"SMS error: {e}")
                     time.sleep(5)
 
             if not stop_flag:
                 try:
                     auto_bomb(CC, TARGET, "call", CALL_LIMIT, DELAY, THREADS, loop=False)
-                except Exception as e:
+                except BaseException as e:
                     mesgdcrt.FailureMessage(f"CALL error: {e}")
                     time.sleep(5)
 
@@ -47,7 +47,7 @@ def run_bomber():
                 mesgdcrt.SuccessMessage(f"CYCLE #{cycle} COMPLETE")
                 mesgdcrt.WarningMessage(f"Next cycle in {LOOP_WAIT}s...")
                 time.sleep(LOOP_WAIT)
-    except Exception as e:
+    except BaseException as e:
         mesgdcrt.FailureMessage(f"Fatal error: {e}")
     finally:
         bomb_running = False

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import os, sys, json, time, string
+import os, json, time, string
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from colorama import Fore, Style
 from utils.decorators import MessageDecorator
@@ -22,17 +22,17 @@ def auto_bomb(cc, target, mode="sms", count=50, delay=1, threads=5, loop=False):
 
     if cc not in country_codes:
         mesgdcrt.FailureMessage(f"Country code {cc} not supported")
-        sys.exit(1)
+        return
 
     target = format_phone(target)
     if len(target) <= 6 or len(target) >= 12:
         mesgdcrt.FailureMessage("Invalid target number")
-        sys.exit(1)
+        return
 
     api = APIProvider(cc, target, mode, delay=delay)
     if len(APIProvider.api_providers) == 0:
         mesgdcrt.FailureMessage("No APIs available for this target")
-        sys.exit(1)
+        return
 
     mesgdcrt.SuccessMessage(f"Target: +{cc} {target}")
     mesgdcrt.SuccessMessage(f"Mode: {mode.upper()} | Count: {count} per cycle | Threads: {threads}")
